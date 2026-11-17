@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Волшебный Новый Год 2027</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: linear-gradient(-45deg, #1d4ed8, #059669, #7e22ce, #e11d48, #0284c7);
+            background-size: 400% 400%; animation: auroraBG 14s ease infinite;
+            color: #ffffff; font-family: 'Montserrat', sans-serif;
+            min-height: 100vh; overflow-x: hidden; position: relative; transition: background 0.8s ease;
+        }
+        body.theme-gold { background: linear-gradient(-45deg, #b45309, #dc2626, #d97706, #991b1b, #f59e0b); background-size: 400% 400%; }
+        body.theme-ice { background: linear-gradient(-45deg, #0284c7, #06b6d4, #3b82f6, #0ea5e9, #6366f1); background-size: 400% 400%; }
+        @keyframes auroraBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .bokeh { position: fixed; border-radius: 50%; filter: blur(70px); z-index: 0; pointer-events: none; animation: floatBokeh 10s infinite alternate ease-in-out; }
+        .bokeh-1 { width: 450px; height: 450px; background: rgba(253, 224, 71, 0.35); top: -100px; left: -100px; }
+        .bokeh-2 { width: 500px; height: 500px; background: rgba(56, 189, 248, 0.35); bottom: -150px; right: -100px; animation-delay: 3s; }
+        .bokeh-3 { width: 350px; height: 350px; background: rgba(244, 63, 94, 0.35); top: 40%; left: 45%; animation-delay: 6s; }
+        @keyframes floatBokeh { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(40px, -40px) scale(1.15); } }
+        #snow, #fireworks { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        #snow { z-index: 1; } #fireworks { z-index: 3; }
+        .garland { display: flex; justify-content: space-around; padding: 15px 0; position: relative; z-index: 2; }
+        .bulb { width: 16px; height: 16px; border-radius: 50%; animation: flash 1.2s infinite alternate; }
+        .bulb:nth-child(4n+1) { background: #ff4d6d; box-shadow: 0 0 20px #ff4d6d; animation-delay: 0s; }
+        .bulb:nth-child(4n+2) { background: #ffd166; box-shadow: 0 0 20px #ffd166; animation-delay: 0.3s; }
+        .bulb:nth-child(4n+3) { background: #4cc9f0; box-shadow: 0 0 20px #4cc9f0; animation-delay: 0.6s; }
+        .bulb:nth-child(4n+4) { background: #06d6a0; box-shadow: 0 0 20px #06d6a0; animation-delay: 0.9s; }
+        @keyframes flash { 0% { opacity: 0.45; transform: scale(0.85); } 100% { opacity: 1; transform: scale(1.2); } }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; flex-wrap: wrap; gap: 15px; }
+        .logo { font-weight: 900; font-size: 1.6rem; letter-spacing: 2px; text-shadow: 0 2px 15px rgba(0, 0, 0, 0.25); }
+        nav { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        nav a, .btn-theme { color: #ffffff; text-decoration: none; font-weight: 600; font-size: 0.9rem; padding: 8px 16px; border-radius: 20px; background: rgba(255, 255, 255, 0.16); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.3); cursor: pointer; transition: 0.3s; font-family: 'Montserrat', sans-serif; }
+        nav a:hover, .btn-theme:hover { background: #ffffff; color: #1d4ed8; transform: translateY(-2px); }
+        .hero { text-align: center; padding: 45px 0 35px; }
+        .script-badge { font-family: 'Marck Script', cursive; font-size: 2.8rem; color: #fef08a; margin-bottom: 8px; display: block; }
+        .hero h1 { font-size: 4.2rem; font-weight: 900; line-height: 1.05; text-transform: uppercase; margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); }
+        .hero p { font-size: 1.15rem; color: #f8fafc; max-width: 640px; margin: 0 auto 35px; line-height: 1.7; }
+        .countdown { display: flex; justify-content: center; gap: 18px; margin-bottom: 35px; flex-wrap: wrap; }
+        .time-box { background: rgba(255, 255, 255, 0.18); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 22px; padding: 18px 24px; min-width: 110px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
+        .time-box span { display: block; font-size: 2.6rem; font-weight: 900; color: #fef08a; line-height: 1; margin-bottom: 6px; }
+        .time-box small { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-magic { display: inline-block; padding: 16px 40px; font-size: 1.05rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #1e1b4b; background: linear-gradient(90deg, #fef08a, #fde047, #ffffff); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 10px 30px rgba(253, 224, 71, 0.5); transition: all 0.3s ease; }
+        .btn-magic:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 15px 40px rgba(255, 255, 255, 0.85); }
+        .glass-section { background: rgba(255, 255, 255, 0.16); backdrop-filter: blur(22px); border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 32px; padding: 40px 25px; margin: 35px 0; text-align: center; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.18); }
+        .glass-section h2 { font-size: 2.1rem; font-weight: 900; margin-bottom: 10px; }
+        .glass-section > p { color: #f1f5f9; margin-bottom: 25px; }
+        .crystal-ball { width: 240px; height: 240px; margin: 0 auto 15px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7), rgba(147, 197, 253, 0.25) 45%, rgba(30, 27, 75, 0.75) 100%); border: 3px solid rgba(255, 255, 255, 0.75); box-shadow: 0 0 40px rgba(254, 240, 138, 0.5), inset 0 0 30px rgba(255, 255, 255, 0.6); display: flex; align-items: center; justify-content: center; padding: 25px; cursor: pointer; user-select: none; transition: transform 0.3s, box-shadow 0.3s; position: relative; }
+        .crystal-ball:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(254, 240, 138, 0.85), inset 0 0 35px rgba(255, 255, 255, 0.8); }
+        .crystal-ball.shake { animation: shakeBall 0.6s ease; }
+        @keyframes shakeBall { 0%, 100% { transform: rotate(0deg) scale(1); } 20% { transform: rotate(-12deg) scale(1.08); } 40% { transform: rotate(12deg) scale(1.08); } 60% { transform: rotate(-8deg) scale(1.05); } 80% { transform: rotate(8deg) scale(1.05); } }
+        .ball-stand { width: 140px; height: 28px; margin: -12px auto 20px; background: linear-gradient(90deg, #b45309, #fbbf24, #b45309); border-radius: 10px 10px 25px 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .prediction-text { font-size: 1.05rem; font-weight: 800; color: #fef08a; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); line-height: 1.4; }
+        .game-stats { display: flex; justify-content: center; gap: 30px; font-size: 1.2rem; font-weight: 900; margin-bottom: 20px; }
+        .game-stats span { color: #fef08a; }
+        .game-arena { position: relative; width: 100%; max-width: 650px; height: 320px; margin: 0 auto 20px; background: rgba(15, 23, 42, 0.35); border: 2px solid rgba(255, 255, 255, 0.4); border-radius: 24px; overflow: hidden; user-select: none; }
+        .falling-gift { position: absolute; font-size: 2.4rem; cursor: pointer; transition: transform 0.1s; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); }
+        .falling-gift:active { transform: scale(1.4); }
+        .tree-box { position: relative; width: 260px; height: 320px; margin: 0 auto 10px; user-select: none; }
+        .star { font-size: 3.2rem; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); cursor: pointer; z-index: 5; transition: 0.3s; filter: grayscale(0.7); }
+        .star.lit { filter: drop-shadow(0 0 25px #fef08a) brightness(1.3); transform: translateX(-50%) scale(1.2); }
+        .tier { position: absolute; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: solid transparent; border-right: solid transparent; border-bottom: solid #059669; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25)); }
+        .tier-1 { top: 35px; border-left-width: 65px; border-right-width: 65px; border-bottom-width: 85px; border-bottom-color: #10b981; z-index: 3; }
+        .tier-2 { top: 90px; border-left-width: 95px; border-right-width: 95px; border-bottom-width: 105px; border-bottom-color: #059669; z-index: 2; }
+        .tier-3 { top: 155px; border-left-width: 125px; border-right-width: 125px; border-bottom-width: 125px; border-bottom-color: #047857; z-index: 1; }
+        .trunk { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 44px; height: 45px; background: #78350f; border-radius: 0 0 8px 8px; }
+        .ornament { position: absolute; width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.35); border: 2px solid rgba(255, 255, 255, 0.7); cursor: pointer; z-index: 4; transition: 0.3s; }
+        .ornament:hover { transform: scale(1.25); }
+        .form-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
+        .input-name { padding: 16px 24px; font-size: 1.05rem; font-family: 'Montserrat', sans-serif; font-weight: 600; border-radius: 50px; border: 2px solid rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.2); color: #ffffff; outline: none; min-width: 280px; transition: 0.3s; }
+        .input-name::placeholder { color: rgba(255, 255, 255, 0.75); }
+        .input-name:focus { border-color: #fef08a; background: rgba(255, 255, 255, 0.3); }
+        .postcard { max-width: 650px; margin: 0 auto; background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.1)); border: 2px solid #fef08a; border-radius: 26px; padding: 35px 30px; display: none; animation: popIn 0.5s ease; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25); }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.85); } 100% { opacity: 1; transform: scale(1); } }
+        .postcard-title { font-family: 'Marck Script', cursive; font-size: 2.6rem; color: #fef08a; margin-bottom: 15px; }
+        .postcard-text { font-size: 1.15rem; line-height: 1.7; margin-bottom: 25px; }
+        .btn-copy { background: rgba(255, 255, 255, 0.25); border: 1px solid #ffffff; color: #ffffff; padding: 10px 24px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        .btn-copy:hover { background: #ffffff; color: #1e1b4b; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.6rem; } .time-box { min-width: 75px; padding: 14px 12px; } .time-box span { font-size: 1.8rem; } }
+    </style>
+</head>
+<body>
+    <div class="bokeh bokeh-1"></div>
+    <div class="bokeh bokeh-2"></div>
+    <div class="bokeh bokeh-3"></div>
+    <canvas id="snow"></canvas>
+    <canvas id="fireworks"></canvas>
+
+    <div class="garland">
+        <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+        <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+        <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+        <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">❄️ NEW YEAR 2027</div>
+            <nav>
+                <a href="#ball-sec">Предсказания</a>
+                <a href="#game-sec">Мини-игра</a>
+                <a href="#tree-sec">Елка</a>
+                <a href="#postcard-sec">Открытка</a>
+                <button class="btn-theme" id="theme-btn">🎨 Сменить тему</button>
+            </nav>
+        </header>
+
+        <section class="hero" id="timer">
+            <span class="script-badge">Время загадывать желания</span>
+            <h1>С Наступающим<br>Новым Годом!</h1>
+            <p>Узнай свое предсказание на 2027 год, лови подарки, наряжай елку и создавай именные открытки!</p>
+            <div class="countdown">
+                <div class="time-box"><span id="days">00</span><small>Дней</small></div>
+                <div class="time-box"><span id="hours">00</span><small>Часов</small></div>
+                <div class="time-box"><span id="minutes">00</span><small>Минут</small></div>
+                <div class="time-box"><span id="seconds">00</span><small>Секунд</small></div>
+            </div>
+            <button class="btn-magic" id="launch-btn">🎆 Запустить салют!</button>
+        </section>
+
+        <section id="ball-sec" class="glass-section">
+            <h2>🔮 Магический шар предсказаний</h2>
+            <p>Нажми на хрустальный шар, чтобы узнать, что ждет тебя в 2027 году!</p>
+            <div class="crystal-ball" id="magic-ball">
+                <div class="prediction-text" id="prediction-out">Кликни на меня, чтобы узнать судьбу ✨</div>
+            </div>
+            <div class="ball-stand"></div>
+        </section>
+
+        <section id="game-sec" class="glass-section">
+            <h2>🎁 Мини-игра: Поймай подарки!</h2>
+            <p>Кликай по падающим подаркам и мандаринам за 20 секунд, чтобы набрать максимум очков!</p>
+            <div class="game-stats">
+                <div>Очки: <span id="score">0</span></div>
+                <div>Осталось: <span id="time-left">20</span> сек</div>
+            </div>
+            <div class="game-arena" id="game-arena"></div>
+            <button class="btn-magic" id="start-game-btn">🎮 Начать игру</button>
+        </section>
+
+        <section id="tree-sec" class="glass-section">
+            <h2>🎄 Интерактивная новогодняя елка</h2>
+            <p>Нажимай на серые шарики, чтобы раскрасить их, и кликни на звезду на макушке!</p>
+            <div class="tree-box">
+                <div class="star" id="tree-star" title="Зажечь звезду!">⭐</div>
+                <div class="tier tier-1"></div>
+                <div class="tier tier-2"></div>
+                <div class="tier tier-3"></div>
+                <div class="trunk"></div>
+                <div class="ornament" style="top: 85px; left: 118px;"></div>
+                <div class="ornament" style="top: 135px; left: 90px;"></div>
+                <div class="ornament" style="top: 145px; left: 145px;"></div>
+                <div class="ornament" style="top: 195px; left: 65px;"></div>
+                <div class="ornament" style="top: 210px; left: 120px;"></div>
+                <div class="ornament" style="top: 195px; left: 170px;"></div>
+                <div class="ornament" style="top: 245px; left: 95px;"></div>
+                <div class="ornament" style="top: 245px; left: 150px;"></div>
+            </div>
+        </section>
+
+        <section id="postcard-sec" class="glass-section" style="margin-bottom: 90px;">
+            <h2>✨ Генератор волшебных открыток</h2>
+            <p>Введи имя того, кого хочешь поздравить, и нажми на кнопку</p>
+            <div class="form-row">
+                <input type="text" id="friend-name" class="input-name" placeholder="Например: Саша или Мама">
+                <button class="btn-magic" id="generate-btn">Создать открытку</button>
+            </div>
+            <div class="postcard" id="postcard-result">
+                <div class="postcard-title" id="card-heading">С Новым 2027 Годом!</div>
+                <div class="postcard-text" id="card-body"></div>
+                <button class="btn-copy" id="copy-btn">📋 Скопировать текст</button>
+            </div>
+        </section>
+    </div>
+    <script>
+        const themes = ['', 'theme-gold', 'theme-ice'];
+        let themeIdx = 0;
+        document.getElementById('theme-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            themeIdx = (themeIdx + 1) % themes.length;
+            document.body.className = themes[themeIdx];
+        });
+
+        const newYearDate = new Date('January 1, 2027 00:00:00').getTime();
+        function updateTimer() {
+            const diff = newYearDate - new Date().getTime();
+            if (diff <= 0) return;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+            document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+            document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+            document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+        }
+        setInterval(updateTimer, 1000); updateTimer();
+
+        const snowCanvas = document.getElementById('snow');
+        const snowCtx = snowCanvas.getContext('2d');
+        let width = snowCanvas.width = window.innerWidth;
+        let height = snowCanvas.height = window.innerHeight;
+        const flakes = Array.from({ length: 130 }, () => ({
+            x: Math.random() * width, y: Math.random() * height, r: Math.random() * 4 + 1.5, d: Math.random() * 1.2 + 0.5
+        }));
+        setInterval(() => {
+            snowCtx.clearRect(0, 0, width, height);
+            snowCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            snowCtx.beginPath();
+            for (let f of flakes) {
+                snowCtx.moveTo(f.x, f.y); snowCtx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
+                f.y += f.d; f.x += Math.sin(f.y * 0.01) * 0.6;
+                if (f.y > height) { f.y = -5; f.x = Math.random() * width; }
+            }
+            snowCtx.fill();
+        }, 25);
+
+        const fwCanvas = document.getElementById('fireworks');
+        const fwCtx = fwCanvas.getContext('2d');
+        fwCanvas.width = width; fwCanvas.height = height;
+        let particles = [];
+        const colors = ['#fde047', '#ff4d6d', '#4cc9f0', '#06d6a0', '#ffffff', '#f472b6'];
+
+        function createFirework(x, y) {
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            for (let i = 0; i < 65; i++) {
+                const angle = (Math.PI * 2 * i) / 65;
+                const speed = Math.random() * 5 + 2;
+                particles.push({
+                    x, y, vx: Math.cos(angle) * speed * (Math.random() * 0.8 + 0.4),
+                    vy: Math.sin(angle) * speed * (Math.random() * 0.8 + 0.4),
+                    alpha: 1, color, size: Math.random() * 3.5 + 1.5
+                });
+            }
+        }
+
+        function animateFireworks() {
+            fwCtx.clearRect(0, 0, width, height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx; p.y += p.vy; p.vy += 0.06; p.alpha -= 0.015;
+                if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+                fwCtx.globalAlpha = p.alpha; fwCtx.fillStyle = p.color;
+                fwCtx.beginPath(); fwCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2); fwCtx.fill();
+            }
+            fwCtx.globalAlpha = 1; requestAnimationFrame(animateFireworks);
+        }
+        animateFireworks();
+
+        document.getElementById('launch-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            for (let i = 0; i < 6; i++) {
+                setTimeout(() => createFirework(Math.random() * (width * 0.7) + width * 0.15, Math.random() * (height * 0.45) + height * 0.1), i * 250);
+            }
+        });
+
+        document.body.addEventListener('click', (e) => {
+            if (!['BUTTON', 'INPUT', 'A'].includes(e.target.tagName) && !e.target.closest('#magic-ball') && !e.target.classList.contains('ornament') && !e.target.classList.contains('falling-gift') && e.target.id !== 'tree-star') {
+                createFirework(e.clientX, e.clientY);
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            width = snowCanvas.width = fwCanvas.width = window.innerWidth;
+            height = snowCanvas.height = fwCanvas.height = window.innerHeight;
+        });
+        const predictions = [
+            "В 2027 году тебя ждет неожиданное и очень крутое путешествие! ✈️",
+            "Твоя самая смелая идея выстрелит и принесет отличный доход! 💰",
+            "Впереди год ярких знакомств, верных друзей и громких побед! 🏆",
+            "Удача будет на твоей стороне во всех начинаниях — смело рискуй! 🍀",
+            "Тебя ждет исполнение желания, которое ты загадывал уже давно! 🌟",
+            "2027 год подарит море вдохновения, энергии и поводов для радости! 🚀"
+        ];
+        const ball = document.getElementById('magic-ball');
+        const predOut = document.getElementById('prediction-out');
+        ball.addEventListener('click', (e) => {
+            e.stopPropagation();
+            ball.classList.remove('shake');
+            void ball.offsetWidth;
+            ball.classList.add('shake');
+            predOut.innerText = "✨ Колдую...";
+            setTimeout(() => {
+                predOut.innerText = predictions[Math.floor(Math.random() * predictions.length)];
+                createFirework(e.clientX, e.clientY);
+            }, 500);
+        });
+
+        const arena = document.getElementById('game-arena');
+        const giftIcons = ['🎁', '🍊', '🧸', '🍬', '⭐'];
+        let score = 0, timeLeft = 20, gameActive = false, spawnInt, timerInt;
+
+        document.getElementById('start-game-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (gameActive) return;
+            gameActive = true; score = 0; timeLeft = 20;
+            document.getElementById('score').innerText = score;
+            document.getElementById('time-left').innerText = timeLeft;
+            arena.innerHTML = '';
+            this.innerText = '🔥 Лови подарки!';
+
+            spawnInt = setInterval(() => {
+                const gift = document.createElement('div');
+                gift.className = 'falling-gift';
+                gift.innerText = giftIcons[Math.floor(Math.random() * giftIcons.length)];
+                gift.style.left = Math.random() * (arena.clientWidth - 45) + 'px';
+                gift.style.top = '-40px';
+                arena.appendChild(gift);
+
+                let pos = -40;
+                const speed = Math.random() * 2.5 + 2;
+                const fall = setInterval(() => {
+                    if (!gameActive) { clearInterval(fall); gift.remove(); return; }
+                    pos += speed;
+                    gift.style.top = pos + 'px';
+                    if (pos > arena.clientHeight) { clearInterval(fall); gift.remove(); }
+                }, 20);
+
+                gift.addEventListener('mousedown', (ev) => {
+                    ev.stopPropagation();
+                    if (!gameActive) return;
+                    score += 10;
+                    document.getElementById('score').innerText = score;
+                    createFirework(ev.clientX, ev.clientY);
+                    clearInterval(fall); gift.remove();
+                });
+            }, 550);
+
+            timerInt = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time-left').innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    gameActive = false;
+                    clearInterval(spawnInt); clearInterval(timerInt);
+                    document.getElementById('start-game-btn').innerText = '🔄 Сыграть еще раз';
+                    arena.innerHTML = `<div style="padding-top: 130px; font-size: 1.6rem; font-weight: 900;">Время вышло! Твой счет: ${score} 🎉</div>`;
+                }
+            }, 1000);
+        });
+
+        const ballColors = ['#ff4d6d', '#fde047', '#38bdf8', '#f472b6', '#a78bfa'];
+        document.querySelectorAll('.ornament').forEach(b => {
+            let idx = 0;
+            b.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const col = ballColors[idx % ballColors.length];
+                b.style.background = col; b.style.boxShadow = `0 0 18px ${col}`; b.style.borderColor = '#ffffff';
+                idx++;
+            });
+        });
+
+        document.getElementById('tree-star').addEventListener('click', function(e) {
+            e.stopPropagation();
+            this.classList.toggle('lit');
+            if (this.classList.contains('lit')) createFirework(width * 0.5, height * 0.25);
+        });
+
+        const wishes = [
+            "Пусть 2027 год ворвется в твою жизнь как яркий фейерверк! Желаю космической удачи, крутых идей, верных друзей рядом и исполнения даже самых дерзких желаний!",
+            "С Новым 2027 Годом! Пусть каждый день приносит повод для искренней улыбки, в доме всегда царят тепло и уют, а все цели достигаются легко и с удовольствием!",
+            "Пусть в новом году магия случается не только в полночь, но и в самые обычные будни! Желаю здоровья, вдохновения, ярких путешествий и бесконечного счастья!"
+        ];
+
+        document.getElementById('generate-btn').addEventListener('click', () => {
+            const name = document.getElementById('friend-name').value.trim() || "Дорогой друг";
+            document.getElementById('card-heading').innerText = `С Новым Годом, ${name}! 🎄`;
+            document.getElementById('card-body').innerText = wishes[Math.floor(Math.random() * wishes.length)];
+            document.getElementById('postcard-result').style.display = 'block';
+            createFirework(width * 0.3, height * 0.3);
+            setTimeout(() => createFirework(width * 0.7, height * 0.25), 200);
+        });
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            navigator.clipboard.writeText(`${document.getElementById('card-heading').innerText}\n\n${document.getElementById('card-body').innerText}`);
+            this.innerText = '✅ Скопировано!';
+            setTimeout(() => { this.innerText = '📋 Скопировать текст'; }, 2000);
+        });
+    </script>
+</body>
+</html>
